@@ -25,8 +25,8 @@ class TestCreateOrder:
                             1. Отправляем запрос на создание заказа без авторизации;
                             2. Проверяем ответ;
                             ''')
-    def test_create_order_without_auth(self, create_list_of_ingredients):
-        data = create_list_of_ingredients
+    def test_create_order_without_auth(self, ingredients_for_order):
+        data = ingredients_for_order
         response = requests.post(URL.main_url + Endpoints.CREATE_ORDER, data=data)
         assert response.status_code == 401 and response.json().get("message") == MessageText.MESSAGE_WITHOUT_AUTH
 

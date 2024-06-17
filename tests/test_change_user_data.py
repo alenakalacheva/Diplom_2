@@ -56,11 +56,11 @@ class TestChangeUserData:
                                             3. Проверяем ответ
                                             4. Удаляем пользователей
                                             ''')
-    def test_change_email_exist(self, create_exact_user, create_new_user):
-        data = create_exact_user[0]
-        token = create_new_user[1].json()["accessToken"]
+    def test_change_email_exist(self, create_two_users):
+        data_email = create_two_users[0]  # почта пользователя 1 (занятая почта)
+        token = create_two_users[1]
         headers = {'Authorization': token}
-        response = requests.patch(URL.main_url + Endpoints.DATA_CHANGE, headers=headers, data=data)
+        response = requests.patch(URL.main_url + Endpoints.DATA_CHANGE, headers=headers, data=data_email)  # смена почты пользователя 2 на занятую
         assert response.status_code == 403 and response.json().get("message") == MessageText.MESSAGE_EXISTING_EMAIL
 
     @allure.title('Проверка изменения данных пользователя без авторизации')
